@@ -5,13 +5,6 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +12,131 @@
   }
 }
 
+@font-face {
+  font-family: 'BOA-CONSTRUKTOR';
+  src: url('/fonts/BOACONST.woff2') format('woff2'),
+       url('/fonts/BOACONST.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Responsive font sizing for slot-item */
+@media (max-width: 640px) {
+  .slot-item {
+    font-size: 1rem !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    max-width: 95vw !important;
+  }
+}
+
+/* Slot scroll animation (seamless infinite loop) */
+@keyframes scrollInfinite {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Slot scroll container */
+.slot-scroll {
+  animation: scrollInfinite 10s linear infinite;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Slot item */
+.slot-item {
+  font-family: 'BOA-CONSTRUKTOR', monospace, sans-serif;
+  font-size: 10vw;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/* Slot animation */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes glitchEffect {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-2px);
+  }
+  40% {
+    transform: translateX(2px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Slot scroll */
+.slot-scroll {
+  animation: scrollUp 10s linear infinite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Slot item styling */
+.slot-item {
+  font-family: 'BOA-CONSTRUKTOR', monospace, sans-serif;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+  padding: 2rem 0;
+  font-size: 10vw;
+  transition: color 0.2s, text-shadow 0.2s, background 0.2s, border 0.2s;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glitch effect */
+.glitch-text {
+  animation: glitchEffect 0.1s infinite alternate;
+}
+
+/* Hovered state */
+.slot-item:hover {
+  color: #FF1744;
+  text-shadow: 2px 2px 0 #000, 0 0 8px #2979FF, -2px -2px 0 #fff;
+}
+
