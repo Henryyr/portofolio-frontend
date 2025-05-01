@@ -15,7 +15,7 @@ export default function Footer() {
       }}
     >
       <div
-        className="text-xs sm:text-sm text-right font-bold pointer-events-auto pr-3 sm:pr-8"
+        className="text-xs sm:text-sm text-right font-bold pointer-events-auto pr-3 sm:pr-8 hover:scale-105 transition-transform"
         style={{
           color: '#000',
           background: '#fff',

@@ -3,17 +3,11 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
-  const [isDark, setIsDark] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark);
-  }, [isDark]);
-
-  const toggleTheme = () => setIsDark(!isDark);
 
   return (
     <header
@@ -52,27 +46,47 @@ export default function Header() {
           }}
           className="font-extrabold font-boa text-lg sm:text-2xl hover:scale-105 transition-transform"
         >
-          {pathname === '/' ? (
-            'Portfolio'
-          ) : (
-            // Simple Home Icon SVG
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ display: 'block' }}
-              aria-hidden="true"
-            >
-              <path d="M3 12L12 3l9 9" />
-              <path d="M9 21V9h6v12" />
-            </svg>
-          )}
+          <AnimatePresence mode="wait" initial={false}>
+            {pathname === '/' ? (
+              <motion.span
+                key="portfolio"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.2 }}
+                transition={{ type: "spring", stiffness: 120, damping: 18 }}
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                Portfolio
+              </motion.span>
+            ) : (
+              <motion.span
+                key="homeicon"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.2 }}
+                transition={{ type: "spring", stiffness: 120, damping: 18 }}
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                {/* Simple Home Icon SVG */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#000"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ display: 'block' }}
+                  aria-hidden="true"
+                >
+                  <path d="M3 12L12 3l9 9" />
+                  <path d="M9 21V9h6v12" />
+                </svg>
+              </motion.span>
+            )}
+          </AnimatePresence>
         </button>
       </div>
 
