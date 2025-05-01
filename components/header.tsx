@@ -2,9 +2,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
@@ -25,16 +28,10 @@ export default function Header() {
     >
       {/* Kiri: Icon + Nama */}
       <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
-        <img
-          src="/globe.svg"
-          alt="Globe"
-          width={24}
-          height={24}
-          style={{ filter: 'drop-shadow(0 0 2px #2979FF)' }} // glitch biru
-          className="w-6 h-6 sm:w-8 sm:h-8"
-        />
-        <h1
-          className="font-extrabold font-boa text-lg sm:text-2xl"
+        <button
+          type="button"
+          aria-label="Home"
+          onClick={() => router.push('/')}
           style={{
             fontFamily: "'BOA-CONSTRUKTOR', monospace, sans-serif",
             color: '#000',
@@ -45,34 +42,92 @@ export default function Header() {
             textTransform: 'uppercase',
             letterSpacing: '2px',
             whiteSpace: 'nowrap',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minWidth: '40px',
+            minHeight: '32px',
           }}
+          className="font-extrabold font-boa text-lg sm:text-2xl hover:scale-105 transition-transform"
         >
-          Henry Yusuf Rizaldy
-        </h1>
+          {pathname === '/' ? (
+            'Portfolio'
+          ) : (
+            // Simple Home Icon SVG
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ display: 'block' }}
+              aria-hidden="true"
+            >
+              <path d="M3 12L12 3l9 9" />
+              <path d="M9 21V9h6v12" />
+            </svg>
+          )}
+        </button>
       </div>
 
-      {/* Kanan: Toggle Button */}
-      <button
-        onClick={toggleTheme}
-        className="flex items-center justify-center pointer-events-auto"
-        style={{
-          width: 36,
-          height: 36,
-          background: isDark ? '#000' : '#fff',
-          border: '3px solid #888',
-          borderRadius: 0,
-          color: isDark ? '#fff' : '#000',
-          boxShadow: '2px 2px 0 #E0E0E0',
-          transition: 'all 0.2s cubic-bezier(.4,0,.2,1)',
-        }}
-        aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      >
-        {isDark ? (
-          <img src="/file.svg" alt="Dark Mode" width={22} height={22} style={{ filter: 'invert(100%) drop-shadow(0 0 2px #FF1744)' }} />
-        ) : (
-          <img src="/globe.svg" alt="Light Mode" width={22} height={22} style={{ filter: 'drop-shadow(0 0 2px #2979FF)' }} />
-        )}
-      </button>
+      {/* Kanan: Social Icons + Toggle Button */}
+      <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
+        {/* Github */}
+        <a
+          href="https://github.com/henryyr"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          className="hover:scale-110 transition-transform"
+          style={{
+            width: '32px',
+            height: '32px',
+          }}
+        >
+          <img
+            src="/github.gif"
+            alt="GitHub"
+            width={32}
+            height={32}
+          />
+        </a>
+        {/* LinkedIn */}
+        <a
+          href="https://linkedin.com/in/henryyusufrizaldy"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          className="hover:scale-110 transition-transform"
+        >
+          <img
+            src="/linkedin.svg"
+            alt="LinkedIn"
+            width={32}
+            height={32}
+          />
+        </a>
+        {/* Instagram */}
+        <a
+          href="https://instagram.com/henryyr"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          className="hover:scale-110 transition-transform"
+        >
+          <img
+            src="/instagram.svg"
+            alt="Instagram"
+            width={32}
+            height={32}
+          />
+        </a>
+      </div>
     </header>
   );
 }

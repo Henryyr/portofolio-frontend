@@ -55,6 +55,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 /* Slot item */
@@ -68,16 +69,18 @@ body {
   line-height: 1;
   padding: 2rem 0;
   text-align: center;
+  transition: color 0.2s, text-shadow 0.2s, background 0.2s, border 0.2s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: default;
 }
 
-/* Slot animation */
-@keyframes scrollUp {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+/* Glitch effect */
+.glitch-text {
+  animation: glitchEffect 0.1s infinite alternate;
 }
 
 @keyframes glitchEffect {
@@ -101,42 +104,25 @@ body {
   }
 }
 
-/* Slot scroll */
-.slot-scroll {
-  animation: scrollUp 10s linear infinite;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* Slot item styling */
-.slot-item {
-  font-family: 'BOA-CONSTRUKTOR', monospace, sans-serif;
-  font-weight: bold;
-  color: white;
-  text-transform: uppercase;
-  white-space: nowrap;
-  line-height: 1;
-  padding: 2rem 0;
-  font-size: 10vw;
-  transition: color 0.2s, text-shadow 0.2s, background 0.2s, border 0.2s;
-  text-align: center;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Glitch effect */
-.glitch-text {
-  animation: glitchEffect 0.1s infinite alternate;
-}
-
 /* Hovered state */
 .slot-item:hover {
   color: #FF1744;
   text-shadow: 2px 2px 0 #000, 0 0 8px #2979FF, -2px -2px 0 #fff;
+}
+
+/* Button styling */
+button,
+button:focus,
+button:hover {
+  cursor: pointer !important;
+  user-select: none !important;
+  z-index: 20;
+  position: relative;
+}
+
+/* Kecualikan input dan textarea agar tetap bisa di-select */
+input, textarea {
+  user-select: text !important;
+  cursor: text !important;
 }
 

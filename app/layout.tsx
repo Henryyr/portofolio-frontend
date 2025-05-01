@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Image from "next/image";
+import FadeTransition from "@/components/fade-transition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,9 @@ export default function RootLayout({
               className="object-cover"
             />
           </div>
-          <div className="relative z-10">{children}</div>
+          <FadeTransition>
+            {children}
+          </FadeTransition>
         </main>
         <Footer />
       </body>

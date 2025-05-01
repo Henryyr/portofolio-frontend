@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const glitchFonts = [
   'monospace',
@@ -17,7 +18,6 @@ function getRandomFont() {
 }
 
 function getGlitchText(text: string) {
-  // Simple glitch: randomly replace some chars with symbols
   const chars = '!@#$%^&*()_+-=~';
   return text
     .split('')
@@ -25,62 +25,93 @@ function getGlitchText(text: string) {
     .join('');
 }
 
-export default function Slot() {
-  const [slotItems, setSlotItems] = useState<string[]>([]);
+const WORDS = ['Portofolio', 'Project', 'About Me', 'Contact', 'Music', 'Design'];
+
+export default function Slot({ onAboutMeClick }: { onAboutMeClick?: () => void }) {
+  const router = useRouter();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [glitchFont, setGlitchFont] = useState<string>('');
-  const [glitchText, setGlitchText] = useState<string>('');
+  const [glitchFont, setGlitchFont] = useState('');
+  const [glitchText, setGlitchText] = useState('');
 
-  const generateRandomText = () => {
-    const words = ['Portofolio', 'Project', 'About Me', 'Contact', 'Music', 'Design'];
-    return Array.from({ length: 1 }, () => words[Math.floor(Math.random() * words.length)]);
-  };
-
-  useEffect(() => {
-    setSlotItems(generateRandomText());
-
-    const interval = setInterval(() => {
-      setSlotItems(generateRandomText());
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Glitch effect on hover
   useEffect(() => {
     if (hoveredIndex !== null) {
       const interval = setInterval(() => {
+        const i = hoveredIndex % WORDS.length;
         setGlitchFont(getRandomFont());
-        setGlitchText(getGlitchText(slotItems[0] || ''));
+        setGlitchText(getGlitchText(WORDS[i]));
       }, 80);
       return () => clearInterval(interval);
     } else {
       setGlitchFont('');
       setGlitchText('');
     }
-  }, [hoveredIndex, slotItems]);
+  }, [hoveredIndex]);
+
+  const fullList = [...WORDS, ...WORDS];
 
   return (
-    <div className="overflow-hidden h-full w-full">
-      <div className="slot-scroll flex flex-col items-center">
-        {Array.from({ length: 12 }).map((_, i) => (
+    <div className="relative overflow-hidden w-full flex flex-col items-center"
+      style={{
+        height: 'calc(100vh - 52px - 56px)', // tinggi viewport dikurangi footer dan header
+        marginTop: '56px', // mulai setelah header
+        marginBottom: '52px', // berhenti sebelum footer
+      }}
+    >
+      <div
+        className="flex flex-col items-center animate-scroll-up"
+        style={{
+          animationDuration: '18s', // lebih lambat agar lebih besar
+          animationTimingFunction: 'linear',
+          animationIterationCount: 'infinite',
+        }}
+      >
+        {fullList.map((item, i) => (
           <div
             key={i}
-            className="slot-item transition-all duration-150 font-extrabold text-2xl font-boa"
+            className="text-7xl font-extrabold font-boa my-10 px-6 transition-all duration-150 select-none"
             style={{
               fontFamily: "'BOA-CONSTRUKTOR', monospace, sans-serif",
               color: hoveredIndex === i && glitchFont ? '#FF1744' : '#fff',
-              textShadow: hoveredIndex === i && glitchFont ? '2px 2px 0 #000, 0 0 8px #2979FF, -2px -2px 0 #fff' : '',
-              padding: '4px 16px',
-              margin: '6px 0',
+              textShadow:
+                hoveredIndex === i && glitchFont
+                  ? '2px 2px 0 #000, 0 0 8px #2979FF, -2px -2px 0 #fff'
+                  : '',
+              cursor: item === 'About Me' ? 'pointer' : 'default',
             }}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
+            onClick={() => {
+              if (item === 'About Me') {
+                onAboutMeClick ? onAboutMeClick() : router.push('/about');
+              }
+            }}
           >
-            {hoveredIndex === i && glitchText ? glitchText : slotItems[0]}
+            {hoveredIndex === i && glitchText ? glitchText : item}
           </div>
         ))}
       </div>
+
+      <button
+        onClick={() => (onAboutMeClick ? onAboutMeClick() : router.push('/about'))}
+        className="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-800 text-white rounded shadow-lg z-10 relative"
+      >
+        About me
+      </button>
+
+      {/* Tambahkan keyframes langsung di sini */}
+      <style jsx>{`
+        @keyframes scroll-up {
+          0% {
+            transform: translateY(calc(100vh - 52px - 56px));
+          }
+          100% {
+            transform: translateY(-100%);
+          }
+        }
+        .animate-scroll-up {
+          animation-name: scroll-up;
+        }
+      `}</style>
     </div>
   );
 }
