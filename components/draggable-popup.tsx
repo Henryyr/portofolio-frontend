@@ -76,8 +76,8 @@ export default function DraggablePopup({
       onMouseUp={onMouseUp}
     >
       <div
-        className="flex items-center justify-between px-4 py-2 bg-black text-white rounded-t cursor-move select-none"
-        style={{ borderBottom: '2px solid #000' }}
+        className="flex items-center justify-between px-4 py-2 text-white rounded-t cursor-move select-none"
+        style={{ borderBottom: '2px solid #000', backgroundColor: '#274472' }}
         onMouseDown={onMouseDown}
       >
         <span className="font-bold">{title}</span>
@@ -89,7 +89,7 @@ export default function DraggablePopup({
           ×
         </button>
       </div>
-      <ul className="p-4 space-y-2 font-mono text-base">
+      <ul className="p-4 space-y-2 font-mono text-base text-black">
         {items.map((item) => (
           <li key={item} className="px-2 py-1 rounded hover:bg-gray-100">{item}</li>
         ))}

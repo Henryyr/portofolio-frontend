@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 export default function DraggableContainer({
   children,
   initialPos,
+  title,
 }: {
   children: React.ReactNode;
   initialPos: { x: number; y: number };
+  title: string;
 }) {
   const [pos, setPos] = useState<{ x: number; y: number }>(initialPos);
   const [dragging, setDragging] = useState(false);
@@ -47,11 +49,11 @@ export default function DraggableContainer({
         zIndex: 20,
         maxWidth: '100vw',
         maxHeight: '100vh',
-        background: '#fff', // samakan dengan popup
-        border: '2px solid #000', // samakan dengan popup
-        borderRadius: 8, // samakan dengan popup
-        boxShadow: '0 8px 32px rgba(0,0,0,0.18)', // samakan dengan popup
-        overflow: 'hidden', // agar border-radius rapi
+        background: '#fff',
+        border: '2px solid #000',
+        borderRadius: 8,
+        boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+        overflow: 'hidden',
       }}
     >
       <div
@@ -61,7 +63,7 @@ export default function DraggableContainer({
           height: 32,
           borderTopLeftRadius: 8,
           borderTopRightRadius: 8,
-          background: 'rgba(0,0,0,0.85)', // samakan dengan popup
+          background: '#274472',
           color: '#fff',
           display: 'flex',
           alignItems: 'center',
@@ -69,11 +71,11 @@ export default function DraggableContainer({
           fontWeight: 600,
           fontFamily: "var(--font-geist-mono), 'Fira Mono', 'monospace', sans-serif",
           userSelect: 'none',
-          borderBottom: '2px solid #000', // samakan dengan popup
+          borderBottom: '2px solid #000',
         }}
         onMouseDown={onMouseDown}
       >
-        ABOUT ME
+        {title.toUpperCase()}
       </div>
       <div>
         {children}

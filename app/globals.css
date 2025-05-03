@@ -1,15 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #000000;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #000000;
-  }
+  --background: #274472; /* biru vintage */
+  --foreground: #ffffff; /* putih */
 }
 
 @font-face {

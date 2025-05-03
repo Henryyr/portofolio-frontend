@@ -29,9 +29,10 @@ const WORDS = ['Portofolio', 'Project', 'About Me', 'Contact', 'Music', 'Design'
 
 interface SlotProps {
   onAboutMeClick?: () => void;
+  onContactClick?: () => void;
 }
 
-export default function Slot({ onAboutMeClick }: SlotProps) {
+export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [glitchFont, setGlitchFont] = useState('');
@@ -55,7 +56,7 @@ export default function Slot({ onAboutMeClick }: SlotProps) {
   const fullList = [...WORDS, ...WORDS, ...WORDS]; // Triple the list for smoother scrolling
 
   return (
-    <div className="relative overflow-hidden w-full flex flex-col items-center"
+    <div className="relative overflow-hidden w-full flex flex-col items-start px-8"
       style={{
         height: 'calc(100vh - 52px - 56px)', // height minus footer and header
         marginTop: '56px',
@@ -66,26 +67,29 @@ export default function Slot({ onAboutMeClick }: SlotProps) {
 
       <div 
         ref={scrollRef}
-        className="flex flex-col items-center animate-infinite-scroll"
+        className="flex flex-col items-start animate-infinite-scroll"
       >
         {fullList.map((item, i) => (
           <div
             key={i}
-            className="text-5xl md:text-7xl font-extrabold my-4 px-6 transition-all duration-150 select-none"
+            className="text-5xl md:text-7xl font-extrabold my-4 px-6 transition-all duration-150 select-none text-left"
             style={{
               fontFamily: "'BOA-CONSTRUKTOR', monospace, sans-serif",
-              color: hoveredIndex === i && glitchFont ? '#FF1744' : '#fff',
-              textShadow:
-                hoveredIndex === i && glitchFont
-                  ? '2px 2px 0 #000, 0 0 8px #2979FF, -2px -2px 0 #fff'
-                  : '',
-              cursor: item === 'About Me' ? 'pointer' : 'default',
+              color: hoveredIndex === i && glitchFont ? '#000' : '#fff',
+textShadow:
+  hoveredIndex === i && glitchFont
+    ? `0 0 5px ${glitchFont}, 0 0 10px ${glitchFont}, 0 0 15px ${glitchFont}`
+    : 'none',
+              cursor: (item === 'About Me' || item === 'Contact') ? 'pointer' : 'default',
             }}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
             onClick={() => {
               if (item === 'About Me') {
                 onAboutMeClick ? onAboutMeClick() : window.location.href = '/about';
+              }
+              if (item === 'Contact') {
+                onContactClick ? onContactClick() : window.location.href = '/contact';
               }
             }}
           >

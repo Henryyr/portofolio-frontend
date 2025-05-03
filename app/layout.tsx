@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import FadeTransition from "@/components/fade-transition";
-// import DynamicBackground from "@/components/dynamic-background";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,18 +20,44 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" style={{ backgroundColor: "black" }}>
+    <html lang="en" style={{ backgroundColor: "#274472" }}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
-        style={{ minHeight: "100vh", width: "100vw", overflowX: "hidden" }}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{
+          minHeight: "100vh",
+          width: "100vw",
+          overflowX: "hidden",
+          backgroundColor: "#274472", // Warna background tetap
+          position: "relative", // Untuk positioning garis
+        }}
       >
-        {/* <DynamicBackground /> */}
+        {/* Garis-garis pada latar belakang */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            pointerEvents: "none", // Supaya tidak mengganggu interaksi
+            zIndex: -1,
+            background: `
+              linear-gradient(45deg, white 25%, transparent 25%) 0 0,
+              linear-gradient(-45deg, white 25%, transparent 25%) 0 0,
+              linear-gradient(45deg, transparent 75%, white 75%) 0 0,
+              linear-gradient(-45deg, transparent 75%, white 75%) 0 0`,
+            backgroundSize: "20px 20px",
+            backgroundPosition: "0 0, 0 0, 10px 10px, 10px 10px",
+          }}
+        ></div>
+
         <Header />
         <main className="relative min-h-screen overflow-hidden">
           <FadeTransition>
@@ -40,7 +65,7 @@ export default function RootLayout({
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "flex-start",
               }}
             >
               {children}
@@ -52,3 +77,4 @@ export default function RootLayout({
     </html>
   );
 }
+
