@@ -75,14 +75,18 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
                   : 'none',
               cursor: item === 'About Me' || item === 'Contact' ? 'pointer' : 'default',
             }}
-            onMouseEnter={() => setHoveredIndex(i)} // eslint-disable-line @typescript-eslint/no-unused-expressions
-            onMouseLeave={() => setHoveredIndex(null)} // eslint-disable-line @typescript-eslint/no-unused-expressions
+            onMouseEnter={() => {
+              setHoveredIndex(i);  // Ensure state is updated on hover
+            }}
+            onMouseLeave={() => {
+              setHoveredIndex(null); // Ensure state is cleared when mouse leaves
+            }}
             onClick={() => {
               if (item === 'About Me') {
-                onAboutMeClick ? onAboutMeClick() : window.location.href = '/about';
+                onAboutMeClick ? onAboutMeClick() : (window.location.href = '/about');
               }
               if (item === 'Contact') {
-                onContactClick ? onContactClick() : window.location.href = '/contact';
+                onContactClick ? onContactClick() : (window.location.href = '/contact');
               }
             }}
           >
