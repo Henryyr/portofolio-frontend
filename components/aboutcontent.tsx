@@ -78,13 +78,6 @@ export default function AboutContent({ onClose }: { onClose: () => void }) {
                 Hi, I'm{' '}
                 <span
                   className="font-bold inline-block transition-transform duration-[1500ms] ease-in"
-                  style={{
-                    cursor: isDropped ? 'default' : 'pointer',
-                    transform: isDropped ? 'translateY(120vh)' : 'none',
-                  }}
-                  onMouseEnter={() => {
-                    if (!isDropped) setIsDropped(true);
-                  }}
                 >
                   Henry Yusuf Rizaldy
                 </span>
