@@ -75,8 +75,8 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
                   : 'none',
               cursor: item === 'About Me' || item === 'Contact' ? 'pointer' : 'default',
             }}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
+            onMouseEnter={() => setHoveredIndex(i)} // eslint-disable-line @typescript-eslint/no-unused-expressions
+            onMouseLeave={() => setHoveredIndex(null)} // eslint-disable-line @typescript-eslint/no-unused-expressions
             onClick={() => {
               if (item === 'About Me') {
                 onAboutMeClick ? onAboutMeClick() : window.location.href = '/about';

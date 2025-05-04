@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Slot from '@/components/slot';
 import AboutContent from '@/components/aboutcontent';
 import ContactContent from '@/components/contactcontent'; // Import ContactContent
