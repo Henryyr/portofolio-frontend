@@ -1,12 +1,9 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Header() {
-  const pathname = usePathname();
-  const router = useRouter();
-
   return (
     <header
       className="w-full flex items-center justify-between px-3 sm:px-6 py-2 sm:py-4 fixed top-0 z-50 pointer-events-none"
@@ -19,9 +16,7 @@ export default function Header() {
     >
       <div className="cursor-pointer flex items-center justify-center pointer-events-auto">
         {/* Animated Image for Header with Hover Effect */}
-        <motion.img
-          src="/header.svg"
-          alt="header"
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.2 }}
@@ -35,13 +30,14 @@ export default function Header() {
             damping: 18,
           }}
           className="pointer-events-auto"
-          style={{
-            width: '12vw', // Width relative to viewport width for smaller screens
-            maxWidth: '180px', // Cap max width
-            height: 'auto',
-            display: 'block',
-          }}
-        />
+        >
+          <Image
+            src="/header.svg"
+            alt="header"
+            width={150}
+            height={200}
+          />
+        </motion.div>
       </div>
 
       {/* Right: Social Icons + Toggle Button */}
@@ -58,11 +54,12 @@ export default function Header() {
             height: '32px',
           }}
         >
-          <img
+          <Image
             src="/github.gif"
             alt="GitHub"
             width={32}
             height={32}
+            unoptimized={true} // Use unoptimized for GIFs to prevent Next.js from optimizing them
           />
         </a>
         {/* LinkedIn */}
@@ -73,7 +70,7 @@ export default function Header() {
           aria-label="LinkedIn"
           className="hover:scale-110 transition-transform"
         >
-          <img
+          <Image
             src="/linkedin.svg"
             alt="LinkedIn"
             width={32}
@@ -88,7 +85,7 @@ export default function Header() {
           aria-label="Instagram"
           className="hover:scale-110 transition-transform"
         >
-          <img
+          <Image
             src="/instagram.svg"
             alt="Instagram"
             width={32}

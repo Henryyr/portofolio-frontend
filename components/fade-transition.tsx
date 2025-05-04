@@ -4,14 +4,15 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 export default function FadeTransition({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+  const pathname = usePathname(); // Using pathname correctly
   const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
   const [displayChildren, setDisplayChildren] = useState(children);
   const prevChildrenRef = useRef(children);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (prevChildrenRef.current === children) return;
+    if (prevChildrenRef.current === children) return; // No need to transition if children haven't changed
+
     setFadeState('out');
     timeoutRef.current = setTimeout(() => {
       setDisplayChildren(children);
@@ -22,8 +23,7 @@ export default function FadeTransition({ children }: { children: React.ReactNode
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, children]);
+  }, [pathname, children]); // Add children to the dependencies array
 
   return (
     <div className={`fade-wrapper${fadeState === 'in' ? ' fade-in' : ' fade-out'}`}>

@@ -7,7 +7,6 @@ import ContactContent from '@/components/contactcontent'; // Import ContactConte
 import { useState } from 'react';
 
 export default function Home() {
-  const router = useRouter();
   const [showAbout, setShowAbout] = useState(false);
   const [showContact, setShowContact] = useState(false); // Add state for ContactContent
 

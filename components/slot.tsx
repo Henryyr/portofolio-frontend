@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 const glitchFonts = [
   'monospace',
@@ -32,11 +32,9 @@ interface SlotProps {
 }
 
 export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
-
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [glitchFont, setGlitchFont] = useState('');
   const [glitchText, setGlitchText] = useState('');
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     if (hoveredIndex !== null) {
@@ -55,7 +53,8 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
   const fullList = [...WORDS, ...WORDS, ...WORDS]; // Triple the list for smoother scrolling
 
   return (
-    <div className="relative overflow-hidden w-full flex flex-col items-start px-8"
+    <div
+      className="relative overflow-hidden w-full flex flex-col items-start px-8"
       style={{
         height: 'calc(100vh - 52px - 56px)', // height minus footer and header
         marginTop: '56px',
@@ -63,22 +62,18 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
         overflowY: 'hidden', // Prevent scrolling on mobile or dragging
       }}
     >
-      <div 
-        ref={scrollRef}
-        className="flex flex-col items-start animate-infinite-scroll"
-      >
+      <div className="flex flex-col items-start animate-infinite-scroll">
         {fullList.map((item, i) => (
           <div
             key={i}
             className="text-5xl md:text-7xl font-extrabold my-4 px-6 transition-all duration-150 select-none text-left"
             style={{
-              fontFamily: "'BOA-CONSTRUKTOR', monospace, sans-serif",
               color: hoveredIndex === i && glitchFont ? '#000' : '#fff',
               textShadow:
                 hoveredIndex === i && glitchFont
                   ? `0 0 5px ${glitchFont}, 0 0 10px ${glitchFont}, 0 0 15px ${glitchFont}`
                   : 'none',
-              cursor: (item === 'About Me' || item === 'Contact') ? 'pointer' : 'default',
+              cursor: item === 'About Me' || item === 'Contact' ? 'pointer' : 'default',
             }}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}

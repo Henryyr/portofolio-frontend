@@ -6,7 +6,6 @@ import DraggableContainer from '@/components/draggable-container';
 
 export default function AboutContent({ onClose }: { onClose: () => void }) {
   const [isVisible, setIsVisible] = useState(false);
-  const [isDropped, setIsDropped] = useState(false);
   const [popups, setPopups] = useState<Array<'Frontend' | 'Backend' | 'Mobile'>>([]);
   const [popupPositions, setPopupPositions] = useState<Record<string, { x: number; y: number }>>({});
   const contentRef = useRef<HTMLDivElement>(null);
@@ -75,7 +74,7 @@ export default function AboutContent({ onClose }: { onClose: () => void }) {
               }}
             >
               <p>
-                Hi, I'm{' '}
+                Hi, I&apos;m
                 <span
                   className="font-bold inline-block transition-transform duration-[1500ms] ease-in"
                 >
