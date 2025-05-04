@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import DraggableContainer from '@/components/draggable-container';
 
-export default function ContactPage() {
+export default function ContactContent({ onClose }: { onClose: () => void }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ Best regards,
   return (
     <div>
       {centerPos && (
-        <DraggableContainer initialPos={centerPos} title="Contact Me">
+        <DraggableContainer initialPos={centerPos} title="Contact Me" onClose={onClose}>
           <div
             className="w-[350px] sm:w-[480px] bg-white rounded-lg shadow-lg p-6 border border-gray-200 
               transition-all duration-700 ease-in-out"
@@ -69,13 +69,19 @@ Best regards,
                 {body}
               </div>
             </div>
-            <div className="mt-6 text-center">
+
+            {/* Send Email Button Section */}
+            <div className="flex flex-row gap-6 justify-center items-center px-4 mt-6">
               <a
                 href={gmailLink} // Gmail compose link
                 target="_blank"  // Open in a new tab
                 rel="noopener noreferrer"  // Security measure for opening in new tab
-                className="inline-block px-4 py-2 bg-[#274472] text-white rounded hover:bg-[#1f3b5a] transition"
-                >                Send Email
+                className="font-bold text-lg w-[250px] px-6 py-3 bg-white hover:bg-[#274472] hover:text-white transition-all duration-150 cursor-pointer border-2 border-black rounded-md text-center text-black"
+                style={{
+                  fontFamily: "var(--font-geist-mono), 'Fira Mono', 'monospace', sans-serif",
+                }}
+              >
+                Send Email
               </a>
             </div>
           </div>

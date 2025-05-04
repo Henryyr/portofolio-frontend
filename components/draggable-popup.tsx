@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, MouseEvent } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function DraggablePopup({
   title,
@@ -13,14 +13,12 @@ export default function DraggablePopup({
   onClose: () => void;
   initialPos?: { x: number; y: number };
 }) {
-  const [pos, setPos] = useState<{ x: number; y: number }>(
-    initialPos ?? { x: 100, y: 100 }
-  );
+  const [pos, setPos] = useState<{ x: number; y: number }>(initialPos ?? { x: 100, y: 100 });
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const onMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setDragging(true);
     setOffset({
       x: e.clientX - pos.x,
@@ -28,28 +26,21 @@ export default function DraggablePopup({
     });
   };
 
-  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (dragging) {
-      setPos({
-        x: e.clientX - offset.x,
-        y: e.clientY - offset.y,
-      });
-    }
-  };
-
-  const onMouseUp = () => setDragging(false);
-
   useEffect(() => {
     if (!dragging) return;
-    const handleMove = (e: globalThis.MouseEvent) => {
+
+    const handleMove = (e: MouseEvent) => {
       setPos({
         x: e.clientX - offset.x,
         y: e.clientY - offset.y,
       });
     };
+
     const handleUp = () => setDragging(false);
+
     window.addEventListener('mousemove', handleMove);
     window.addEventListener('mouseup', handleUp);
+
     return () => {
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('mouseup', handleUp);
@@ -72,22 +63,39 @@ export default function DraggablePopup({
         userSelect: dragging ? 'none' : 'auto',
       }}
       className="shadow-lg"
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
+      onMouseMove={(e) => e.stopPropagation()} // Prevent drag during mousemove inside popup
     >
       <div
         className="flex items-center justify-between px-4 py-2 text-white rounded-t cursor-move select-none"
-        style={{ borderBottom: '2px solid #000', backgroundColor: '#274472' }}
+        style={{
+          borderBottom: '2px solid #000',
+          backgroundColor: '#274472',
+        }}
         onMouseDown={onMouseDown}
       >
         <span className="font-bold">{title}</span>
-        <button
-          onClick={onClose}
-          className="ml-2 px-2 py-0.5 rounded bg-white text-black border border-black hover:bg-red-500 hover:text-white transition"
-          style={{ fontWeight: 700, fontSize: 16, lineHeight: 1 }}
-        >
-          ×
-        </button>
+        {onClose && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+            className="ml-2 px-2 py-1 rounded bg-white text-black border border-black hover:bg-red-500 hover:text-white transition duration-200 ease-in-out"
+            style={{
+              fontWeight: 700,
+              fontSize: 16,
+              lineHeight: 1,
+              borderRadius: '4px', // Square shape, not rounded
+              width: '24px',
+              height: '24px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            ×
+          </button>
+        )}
       </div>
       <ul className="p-4 space-y-2 font-mono text-base text-black">
         {items.map((item) => (

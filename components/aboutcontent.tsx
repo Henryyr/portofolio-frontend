@@ -4,14 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 import DraggablePopup from '@/components/draggable-popup';
 import DraggableContainer from '@/components/draggable-container';
 
-export default function AboutPage() {
+export default function AboutContent({ onClose }: { onClose: () => void }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isDropped, setIsDropped] = useState(false);
   const [popups, setPopups] = useState<Array<'Frontend' | 'Backend' | 'Mobile'>>([]);
   const [popupPositions, setPopupPositions] = useState<Record<string, { x: number; y: number }>>({});
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Animate on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -22,18 +21,16 @@ export default function AboutPage() {
     Mobile: ['Flutter'],
   };
 
-  // Get random popup position
   const getRandomPosition = () => {
-    const vw = typeof window !== "undefined" ? window.innerWidth : 800;
-    const vh = typeof window !== "undefined" ? window.innerHeight : 600;
+    const vw = typeof window !== 'undefined' ? window.innerWidth : 800;
+    const vh = typeof window !== 'undefined' ? window.innerHeight : 600;
     const x = Math.floor(Math.random() * (vw - 320)) + 40;
     const y = Math.floor(Math.random() * (vh - 220)) + 40;
     return { x, y };
   };
 
-  // Get center position
   const getCenterPosition = () => {
-    if (typeof window === "undefined") return { x: 0, y: 0 };
+    if (typeof window === 'undefined') return { x: 0, y: 0 };
     const width = 720;
     const height = 600;
     const x = Math.max((window.innerWidth - width) / 2, 0);
@@ -47,7 +44,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-16 sm:py-24">
+    <>
       {/* Easter Egg */}
       <div
         style={{
@@ -67,7 +64,7 @@ export default function AboutPage() {
       </div>
 
       {centerPos && (
-        <DraggableContainer initialPos={centerPos} title="About-Me">
+        <DraggableContainer initialPos={centerPos} title="About-Me" onClose={onClose}>
           <div
             ref={contentRef}
             className="max-w-3xl w-full"
@@ -83,7 +80,6 @@ export default function AboutPage() {
               color: '#000',
             }}
           >
-
             <div
               className="space-y-6 text-lg"
               style={{
@@ -95,7 +91,8 @@ export default function AboutPage() {
               }}
             >
               <p>
-                Hi, I'm <span
+                Hi, I'm{' '}
+                <span
                   className="font-bold inline-block transition-transform duration-[1500ms] ease-in"
                   style={{
                     cursor: isDropped ? 'default' : 'pointer',
@@ -104,7 +101,10 @@ export default function AboutPage() {
                   onMouseEnter={() => {
                     if (!isDropped) setIsDropped(true);
                   }}
-                >Henry Yusuf Rizaldy</span>! Welcome to my portfolio.
+                >
+                  Henry Yusuf Rizaldy
+                </span>
+                ! Welcome to my portfolio.
               </p>
 
               <p>
@@ -116,27 +116,27 @@ export default function AboutPage() {
               </p>
 
               <div className="flex flex-row gap-6 justify-center items-center px-4">
-  {(['Frontend', 'Backend', 'Mobile'] as const).map((cat) => (
-    <button
-      key={cat}
-      className="font-bold text-lg w-[250px] px-6 py-3 bg-white hover:bg-[#274472] hover:text-white transition-all duration-150 cursor-pointer border-2 border-black rounded-md"
-      onClick={() => {
-        if (!popups.includes(cat)) {
-          setPopups((prev) => [...prev, cat]);
-          setPopupPositions((prev) => ({
-            ...prev,
-            [cat]: getRandomPosition(),
-          }));
-        }
-      }}
-      style={{
-        fontFamily: "var(--font-geist-mono), 'Fira Mono', 'monospace', sans-serif",
-      }}
-    >
-      {cat}
-    </button>
-  ))}
-</div>
+                {(['Frontend', 'Backend', 'Mobile'] as const).map((cat) => (
+                  <button
+                    key={cat}
+                    className="font-bold text-lg w-[250px] px-6 py-3 bg-white hover:bg-[#274472] hover:text-white transition-all duration-150 cursor-pointer border-2 border-black rounded-md"
+                    onClick={() => {
+                      if (!popups.includes(cat)) {
+                        setPopups((prev) => [...prev, cat]);
+                        setPopupPositions((prev) => ({
+                          ...prev,
+                          [cat]: getRandomPosition(),
+                        }));
+                      }
+                    }}
+                    style={{
+                      fontFamily: "var(--font-geist-mono), 'Fira Mono', 'monospace', sans-serif",
+                    }}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </DraggableContainer>
@@ -151,6 +151,6 @@ export default function AboutPage() {
           initialPos={popupPositions[cat] || getRandomPosition()}
         />
       ))}
-    </div>
+    </>
   );
 }
