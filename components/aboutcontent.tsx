@@ -45,29 +45,12 @@ export default function AboutContent({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      {/* Easter Egg */}
-      <div
-        style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          fontSize: '4rem',
-          userSelect: 'none',
-          pointerEvents: 'none',
-          zIndex: 0,
-          opacity: 0.85,
-        }}
-        aria-label="Easter Egg Emote"
-      >
-        😛
-      </div>
-
+      {/* DraggableContainer for the main content */}
       {centerPos && (
         <DraggableContainer initialPos={centerPos} title="About-Me" onClose={onClose}>
           <div
             ref={contentRef}
-            className="max-w-3xl w-full"
+            className="max-w-3xl w-full overflow-y-auto" // Add overflow-y-auto for scrollable content
             style={{
               transition: 'opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1)',
               opacity: isVisible ? 1 : 0,
@@ -78,6 +61,7 @@ export default function AboutContent({ onClose }: { onClose: () => void }) {
               boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05) inset',
               padding: '2rem',
               color: '#000',
+              maxHeight: '80vh', // Max height to ensure scrolling works
             }}
           >
             <div
@@ -115,11 +99,11 @@ export default function AboutContent({ onClose }: { onClose: () => void }) {
                 My expertise covers both frontend and backend development, allowing me to create full-stack solutions from idea to deployment. I am passionate about UI/UX, creative coding, and always exploring new technologies. Besides coding, I also love making music as a hobby.
               </p>
 
-              <div className="flex flex-row gap-6 justify-center items-center px-4">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center px-4">
                 {(['Frontend', 'Backend', 'Mobile'] as const).map((cat) => (
                   <button
                     key={cat}
-                    className="font-bold text-lg w-[250px] px-6 py-3 bg-white hover:bg-[#274472] hover:text-white transition-all duration-150 cursor-pointer border-2 border-black rounded-md"
+                    className="font-bold text-lg w-full sm:w-[250px] px-6 py-3 bg-white hover:bg-[#274472] hover:text-white transition-all duration-150 cursor-pointer border-2 border-black rounded-md"
                     onClick={() => {
                       if (!popups.includes(cat)) {
                         setPopups((prev) => [...prev, cat]);

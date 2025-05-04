@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from 'react';
 
-
 const glitchFonts = [
   'monospace',
   'cursive',
@@ -61,10 +60,9 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
         height: 'calc(100vh - 52px - 56px)', // height minus footer and header
         marginTop: '56px',
         marginBottom: '52px',
+        overflowY: 'hidden', // Prevent scrolling on mobile or dragging
       }}
     >
-
-
       <div 
         ref={scrollRef}
         className="flex flex-col items-start animate-infinite-scroll"
@@ -76,10 +74,10 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
             style={{
               fontFamily: "'BOA-CONSTRUKTOR', monospace, sans-serif",
               color: hoveredIndex === i && glitchFont ? '#000' : '#fff',
-textShadow:
-  hoveredIndex === i && glitchFont
-    ? `0 0 5px ${glitchFont}, 0 0 10px ${glitchFont}, 0 0 15px ${glitchFont}`
-    : 'none',
+              textShadow:
+                hoveredIndex === i && glitchFont
+                  ? `0 0 5px ${glitchFont}, 0 0 10px ${glitchFont}, 0 0 15px ${glitchFont}`
+                  : 'none',
               cursor: (item === 'About Me' || item === 'Contact') ? 'pointer' : 'default',
             }}
             onMouseEnter={() => setHoveredIndex(i)}
@@ -97,8 +95,6 @@ textShadow:
           </div>
         ))}
       </div>
-
-
 
       <style jsx>{`
         @keyframes infinite-scroll {
