@@ -9,7 +9,6 @@ export default function Header() {
       className="w-full flex items-center justify-between px-3 sm:px-6 py-2 sm:py-4 fixed top-0 z-50 pointer-events-none"
       style={{
         background: '#fff',
-        borderBottom: '4px solid #E0E0E0',
         height: '56px',
         minHeight: '56px',
       }}

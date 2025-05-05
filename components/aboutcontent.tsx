@@ -74,13 +74,7 @@ export default function AboutContent({ onClose }: { onClose: () => void }) {
               }}
             >
               <p>
-                Hi, I&apos;m
-                <span
-                  className="font-bold inline-block transition-transform duration-[1500ms] ease-in"
-                >
-                  Henry Yusuf Rizaldy
-                </span>
-                ! Welcome to my portfolio.
+                Hi, I&apos;m Henry Yusuf Rizaldy. Welcome to my portfolio.
               </p>
 
               <p>

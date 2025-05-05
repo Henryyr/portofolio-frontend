@@ -9,7 +9,6 @@ export default function Footer() {
       className="fixed bottom-0 right-0 w-full flex justify-end items-center pointer-events-none"
       style={{
         background: '#fff',
-        borderBottom: '4px solid #E0E0E0',
         height: '56px',
         minHeight: '56px',
       }}

@@ -40,7 +40,7 @@ Best regards,
   return (
     <div>
       {centerPos && (
-        <DraggableContainer initialPos={centerPos} title="Contact Me" onClose={onClose}>
+        <DraggableContainer initialPos={centerPos} title="Contact-Me" onClose={onClose}>
           <div
             className="w-[350px] sm:w-[480px] bg-white rounded-lg shadow-lg p-6 border border-gray-200 
               transition-all duration-700 ease-in-out"

@@ -1,86 +1,42 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-const glitchFonts = [
-  'monospace',
-  'cursive',
-  'fantasy',
-  'serif',
-  'sans-serif',
-  '"Press Start 2P", cursive',
-  '"Share Tech Mono", monospace',
-];
-
-function getRandomFont() {
-  return glitchFonts[Math.floor(Math.random() * glitchFonts.length)];
-}
-
-function getGlitchText(text: string) {
-  const chars = '!@#$%^&*()_+-=~';
-  return text
-    .split('')
-    .map((c) => (Math.random() > 0.8 ? chars[Math.floor(Math.random() * chars.length)] : c))
-    .join('');
-}
+import { useState } from 'react';
 
 const WORDS = ['Portofolio', 'Project', 'About Me', 'Contact', 'Music', 'Design'];
 
 interface SlotProps {
   onAboutMeClick?: () => void;
   onContactClick?: () => void;
+  onDesignClick?: () => void;
 }
 
-export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
+export default function Slot({ onAboutMeClick, onContactClick, onDesignClick }: SlotProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [glitchFont, setGlitchFont] = useState('');
-  const [glitchText, setGlitchText] = useState('');
 
-  useEffect(() => {
-    if (hoveredIndex !== null) {
-      const interval = setInterval(() => {
-        setGlitchFont(getRandomFont());
-        setGlitchText(getGlitchText(WORDS[hoveredIndex % WORDS.length]));
-      }, 80);
-      return () => clearInterval(interval);
-    } else {
-      setGlitchFont('');
-      setGlitchText('');
-    }
-  }, [hoveredIndex]);
-
-  // Create a duplicate list for infinite scrolling
-  const fullList = [...WORDS, ...WORDS, ...WORDS]; // Triple the list for smoother scrolling
+  const fullList = [...WORDS, ...WORDS, ...WORDS]; // Triple list for scroll illusion
 
   return (
     <div
       className="relative overflow-hidden w-full flex flex-col items-start px-8"
       style={{
-        height: 'calc(100vh - 52px - 56px)', // height minus footer and header
+        height: 'calc(100vh - 52px - 56px)',
         marginTop: '56px',
         marginBottom: '52px',
-        overflowY: 'hidden', // Prevent scrolling on mobile or dragging
+        overflowY: 'hidden',
       }}
     >
       <div className="flex flex-col items-start animate-infinite-scroll">
         {fullList.map((item, i) => (
           <div
             key={i}
-            className="text-5xl md:text-7xl font-extrabold my-4 px-6 transition-all duration-150 select-none text-left"
+            className="text-5xl md:text-7xl font-extrabold my-4 px-6 transition-transform duration-200 ease-in-out select-none text-left"
             style={{
-              color: hoveredIndex === i && glitchFont ? '#000' : '#fff',
-              textShadow:
-                hoveredIndex === i && glitchFont
-                  ? `0 0 5px ${glitchFont}, 0 0 10px ${glitchFont}, 0 0 15px ${glitchFont}`
-                  : 'none',
+              color: '#fff',
+              transform: hoveredIndex === i ? 'scale(1.1)' : 'scale(1)',
               cursor: item === 'About Me' || item === 'Contact' ? 'pointer' : 'default',
             }}
-            onMouseEnter={() => {
-              setHoveredIndex(i);  // Ensure state is updated on hover
-            }}
-            onMouseLeave={() => {
-              setHoveredIndex(null); // Ensure state is cleared when mouse leaves
-            }}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() => setHoveredIndex(null)}
             onClick={() => {
               if (item === 'About Me') {
                 onAboutMeClick ? onAboutMeClick() : (window.location.href = '/about');
@@ -88,9 +44,12 @@ export default function Slot({ onAboutMeClick, onContactClick }: SlotProps) {
               if (item === 'Contact') {
                 onContactClick ? onContactClick() : (window.location.href = '/contact');
               }
+              if (item === 'Design') {
+                onDesignClick ? onDesignClick() : (window.location.href = '/design');
+              }
             }}
           >
-            {hoveredIndex === i && glitchText ? glitchText : item}
+            {item}
           </div>
         ))}
       </div>
