@@ -33,7 +33,7 @@ export default function Slot({ onAboutMeClick, onContactClick, onDesignClick }: 
             style={{
               color: '#fff',
               transform: hoveredIndex === i ? 'scale(1.1)' : 'scale(1)',
-              cursor: item === 'About Me' || item === 'Contact' ? 'pointer' : 'default',
+              cursor: item === 'About Me' || item === 'Contact' || item === 'Design' ? 'pointer' : 'default',
             }}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}

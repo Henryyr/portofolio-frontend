@@ -2,9 +2,9 @@
 
 import Slot from '@/components/slot';
 import AboutContent from '@/components/aboutcontent';
-import ContactContent from '@/components/contactcontent'; // Import ContactContent
-import { useState } from 'react';
+import ContactContent from '@/components/contactcontent';
 import DesignContent from '@/components/designcontent';
+import { useState } from 'react';
 
 export default function Home() {
   const [showAbout, setShowAbout,] = useState(false);
@@ -27,7 +27,7 @@ export default function Home() {
 
       {/* ContactContent Draggable Popup */}
       {showContact && (
-        <ContactContent onClose={() => setShowContact(false)} /> // Show ContactContent when the state is true
+        <ContactContent onClose={() => setShowContact(false)} /> 
       )}
 
       {showDesign && (
