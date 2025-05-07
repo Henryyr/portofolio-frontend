@@ -28,29 +28,31 @@ export default function Slot({ onAboutMeClick, onContactClick, onDesignClick }: 
       <div className="flex flex-col items-start animate-infinite-scroll">
         {fullList.map((item, i) => (
           <div
-            key={i}
-            className="text-5xl md:text-7xl font-extrabold my-4 px-6 transition-transform duration-200 ease-in-out select-none text-left"
-            style={{
-              color: '#fff',
-              transform: hoveredIndex === i ? 'scale(1.1)' : 'scale(1)',
-              cursor: item === 'About Me' || item === 'Contact' || item === 'Design' ? 'pointer' : 'default',
-            }}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            onClick={() => {
-              if (item === 'About Me') {
-                onAboutMeClick ? onAboutMeClick() : (window.location.href = '/about');
-              }
-              if (item === 'Contact') {
-                onContactClick ? onContactClick() : (window.location.href = '/contact');
-              }
-              if (item === 'Design') {
-                onDesignClick ? onDesignClick() : (window.location.href = '/design');
-              }
-            }}
-          >
-            {item}
-          </div>
+          key={i}
+          className={`text-5xl md:text-7xl font-extrabold my-4 px-6 select-none text-left transition-all duration-150 ease-in-out hover:scale-110 hover:rotate-[5deg]`}
+          style={{
+            color: '#fff',
+            cursor: item === 'About Me' || item === 'Contact' || item === 'Design' ? 'pointer' : 'default',
+            transform: hoveredIndex === i ? 'scale(1.1) rotate(5deg)' : 'scale(1) rotate(0deg)',
+            transition: 'transform 150ms ease-out',
+          }}
+          onMouseEnter={() => setHoveredIndex(i)}
+          onMouseLeave={() => setHoveredIndex(null)}
+          onClick={() => {
+            if (item === 'About Me') {
+              onAboutMeClick ? onAboutMeClick() : (window.location.href = '/about');
+            }
+            if (item === 'Contact') {
+              onContactClick ? onContactClick() : (window.location.href = '/contact');
+            }
+            if (item === 'Design') {
+              onDesignClick ? onDesignClick() : (window.location.href = '/design');
+            }
+          }}
+        >
+          {item}
+        </div>
+        
         ))}
       </div>
 
